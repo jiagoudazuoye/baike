@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baike.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.baike.model.User" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="user_image" property="userImage" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="VARCHAR" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="balance" property="balance" jdbcType="DOUBLE" />
+    <result column="freeze" property="freeze" jdbcType="INTEGER" />
+    <result column="pay_password" property="payPassword" jdbcType="INTEGER" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_name, password, user_image, phone, sex, birthday, user_email, register_time,
+    balance, freeze, pay_password, real_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.baike.model.User" >
+    insert into user (user_id, user_name, password,
+    user_image, phone, sex,
+    birthday, user_email, register_time,
+    balance, freeze, pay_password,
+    real_name)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+    #{userImage,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
+    #{birthday,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP},
+    #{balance,jdbcType=DOUBLE}, #{freeze,jdbcType=INTEGER}, #{payPassword,jdbcType=INTEGER},
+    #{realName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.baike.model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="userImage != null" >
+        user_image,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="registerTime != null" >
+        register_time,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="freeze != null" >
+        freeze,
+      </if>
+      <if test="payPassword != null" >
+        pay_password,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userImage != null" >
+        #{userImage,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null" >
+        #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="freeze != null" >
+        #{freeze,jdbcType=INTEGER},
+      </if>
+      <if test="payPassword != null" >
+        #{payPassword,jdbcType=INTEGER},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.baike.model.User" >
+    update user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userImage != null" >
+        user_image = #{userImage,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null" >
+        register_time = #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="freeze != null" >
+        freeze = #{freeze,jdbcType=INTEGER},
+      </if>
+      <if test="payPassword != null" >
+        pay_password = #{payPassword,jdbcType=INTEGER},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.baike.model.User" >
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+    password = #{password,jdbcType=VARCHAR},
+    user_image = #{userImage,jdbcType=VARCHAR},
+    phone = #{phone,jdbcType=VARCHAR},
+    sex = #{sex,jdbcType=VARCHAR},
+    birthday = #{birthday,jdbcType=VARCHAR},
+    user_email = #{userEmail,jdbcType=VARCHAR},
+    register_time = #{registerTime,jdbcType=TIMESTAMP},
+    balance = #{balance,jdbcType=DOUBLE},
+    freeze = #{freeze,jdbcType=INTEGER},
+    pay_password = #{payPassword,jdbcType=INTEGER},
+    real_name = #{realName,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+
+  <update id="userUpdateInfo" parameterType="com.baike.model.User" >
+    update user
+    set
+    phone = #{phone,jdbcType=VARCHAR},
+    sex = #{sex,jdbcType=VARCHAR},
+    birthday = #{birthday,jdbcType=VARCHAR},
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+  <update id="pay" >
+    UPDATE USER
+    set balance = balance - #{price}
+    WHERE user_id = #{userId}
+  </update>
+  <update id="backDepositToUser" >
+    UPDATE USER
+    set balance = balance + #{price}
+    WHERE user_id = #{userId}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT *
+    FROM USER
+  </select>
+
+
+  <!-- 用户查询 -->
+  <select id="find" parameterType="Map" resultMap="BaseResultMap">
+    select * from user
+    <where>
+      <if test="userName!=null and userName!='' ">
+        and user_name like #{userName}
+      </if>
+      <if test="realName!=null and realName!='' ">
+        and real_name like #{realName}
+      </if>
+      <if test="freeze!=null and freeze!='' ">
+        and freeze = #{freeze}
+      </if>
+    </where>
+    <if test="start!=null and size!=null">
+      limit #{start},#{size}
+    </if>
+  </select>
+  <select id="getTotal" parameterType="Map" resultType="Long">
+    select count(*) from user
+    <where>
+      <if test="userName!=null and userName!='' ">
+        and user_name like #{userName}
+      </if>
+      <if test="realName!=null and realName!='' ">
+        and real_name like #{realName}
+      </if>
+      <if test="freeze!=null and freeze!='' ">
+        and freeze = #{freeze}
+      </if>
+    </where>
+  </select>
+
+  <select id="findByName" parameterType="String" resultMap="BaseResultMap">
+    SELECT *
+    from USER
+    where user_name = #{userName}
+  </select>
+
+</mapper>
