@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baike.dao.CommentMapper" >
+  <resultMap id="BaseResultMap" type="com.baike.model.Comment" >
+    <id column="comment_id" property="commentId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="entry_id" property="entryId" jdbcType="INTEGER" />
+    <result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.baike.model.Comment" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    comment_id, user_id, entry_id, comment_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comment
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from comment
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.baike.model.Comment" >
+    insert into comment (comment_id, user_id, entry_id, 
+      comment_time, content)
+    values (#{commentId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{entryId,jdbcType=INTEGER}, 
+      #{commentTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.baike.model.Comment" >
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
+        comment_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="entryId != null" >
+        entry_id,
+      </if>
+      <if test="commentTime != null" >
+        comment_time,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
+        #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="entryId != null" >
+        #{entryId,jdbcType=INTEGER},
+      </if>
+      <if test="commentTime != null" >
+        #{commentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.baike.model.Comment" >
+    update comment
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="entryId != null" >
+        entry_id = #{entryId,jdbcType=INTEGER},
+      </if>
+      <if test="commentTime != null" >
+        comment_time = #{commentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.baike.model.Comment" >
+    update comment
+    set user_id = #{userId,jdbcType=INTEGER},
+      entry_id = #{entryId,jdbcType=INTEGER},
+      comment_time = #{commentTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.baike.model.Comment" >
+    update comment
+    set user_id = #{userId,jdbcType=INTEGER},
+      entry_id = #{entryId,jdbcType=INTEGER},
+      comment_time = #{commentTime,jdbcType=TIMESTAMP}
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </update>
+</mapper>

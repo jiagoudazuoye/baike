@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baike.dao.EntryMapper" >
+  <resultMap id="BaseResultMap" type="com.baike.model.Entry" >
+    <id column="entry_id" property="entryId" jdbcType="INTEGER" />
+    <result column="template_id" property="templateId" jdbcType="INTEGER" />
+    <result column="entry_name" property="entryName" jdbcType="VARCHAR" />
+    <result column="keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.baike.model.Entry" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    entry_id, template_id, entry_name, keyword, create_by, create_time, state
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from entry
+    where entry_id = #{entryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from entry
+    where entry_id = #{entryId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.baike.model.Entry" >
+    insert into entry (entry_id, template_id, entry_name, 
+      keyword, create_by, create_time, 
+      state, content)
+    values (#{entryId,jdbcType=INTEGER}, #{templateId,jdbcType=INTEGER}, #{entryName,jdbcType=VARCHAR}, 
+      #{keyword,jdbcType=VARCHAR}, #{createBy,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.baike.model.Entry" >
+    insert into entry
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="entryId != null" >
+        entry_id,
+      </if>
+      <if test="templateId != null" >
+        template_id,
+      </if>
+      <if test="entryName != null" >
+        entry_name,
+      </if>
+      <if test="keyword != null" >
+        keyword,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="entryId != null" >
+        #{entryId,jdbcType=INTEGER},
+      </if>
+      <if test="templateId != null" >
+        #{templateId,jdbcType=INTEGER},
+      </if>
+      <if test="entryName != null" >
+        #{entryName,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null" >
+        #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.baike.model.Entry" >
+    update entry
+    <set >
+      <if test="templateId != null" >
+        template_id = #{templateId,jdbcType=INTEGER},
+      </if>
+      <if test="entryName != null" >
+        entry_name = #{entryName,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null" >
+        keyword = #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where entry_id = #{entryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.baike.model.Entry" >
+    update entry
+    set template_id = #{templateId,jdbcType=INTEGER},
+      entry_name = #{entryName,jdbcType=VARCHAR},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where entry_id = #{entryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.baike.model.Entry" >
+    update entry
+    set template_id = #{templateId,jdbcType=INTEGER},
+      entry_name = #{entryName,jdbcType=VARCHAR},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER}
+    where entry_id = #{entryId,jdbcType=INTEGER}
+  </update>
+</mapper>

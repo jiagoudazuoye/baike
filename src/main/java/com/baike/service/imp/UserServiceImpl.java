@@ -17,56 +17,45 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;
-    public int pay(int userId, double price) {
-        return userMapper.pay(userId,price);
-    }
+
 
     public User findById(int userId) {
-        return userMapper.selectByPrimaryKey(userId);
-    }
-
-//    public User userInfo(int userId){userMapper.selectByPrimaryKey(userId);}
-
-    public int backDepositToUser(int userId, double price) {
-        return userMapper.backDepositToUser(userId,price);
+        return null;
     }
 
     public List<User> selectAll() {
-        return userMapper.selectAll();
+        return null;
     }
 
     public int add(User user) {
-        return userMapper.insertSelective(user);
+        return 0;
     }
 
     public int update(User user) {
-        return userMapper.updateByPrimaryKeySelective(user);
+        return 0;
     }
 
-    public int userUpdate(Integer userId,String phone,String sex,String birthday){
-        User record=userMapper.selectByPrimaryKey(userId);
-        record.setPhone(phone);
-        record.setSex(sex);
-        record.setBirthday(birthday);
-        return  userMapper.userUpdateInfo(record);
+    public int userUpdate(Integer userId, String phone, String sex, String birthday) {
+        return 0;
     }
-    public int updateImage(Integer userId,String userImage){
-        User user=userMapper.selectByPrimaryKey(userId);
-        user.setUserImage(userImage);
-        return userMapper.userUpdateInfo(user);
+
+    public int updateImage(Integer userId, String userImage) {
+        return 0;
     }
+
     public List<User> find(Map<String, Object> map) {
-        return userMapper.find(map);
+        return null;
     }
 
     public Long getTotal(Map<String, Object> map) {
-        return userMapper.getTotal(map);
+        return null;
     }
 
     public int delete(Integer userId) {
-        return userMapper.deleteByPrimaryKey(userId);
+        return 0;
     }
 
-    public User findByName(String userName) { return userMapper.findByName(userName);}
-
+    public User findByName(String userName) {
+        return null;
+    }
 }

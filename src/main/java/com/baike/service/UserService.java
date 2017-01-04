@@ -10,13 +10,7 @@ import java.util.Map;
  */
 public interface UserService {
 
-    int pay(int userId, double price);
-
     User findById(int userId);
-
-//    User userInfo(int userId);
-
-    int backDepositToUser(int userId, double price);
 
     List<User> selectAll();
 
