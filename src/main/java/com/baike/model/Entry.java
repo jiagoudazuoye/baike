@@ -17,6 +17,8 @@ public class Entry {
 
     private Integer state;
 
+    private Integer subCategoryId;
+
     private String content;
 
     public Integer getEntryId() {
@@ -73,6 +75,14 @@ public class Entry {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public Integer getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public void setSubCategoryId(Integer subCategoryId) {
+        this.subCategoryId = subCategoryId;
     }
 
     public String getContent() {

@@ -1,6 +1,9 @@
 package com.baike.dao;
 
 import com.baike.model.Comment;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 public interface CommentMapper {
     int deleteByPrimaryKey(Integer commentId);
@@ -16,4 +19,9 @@ public interface CommentMapper {
     int updateByPrimaryKeyWithBLOBs(Comment record);
 
     int updateByPrimaryKey(Comment record);
+
+    /***
+     * 获取评论列表
+     */
+    public List getCommentList(@RequestParam("entryId")int entryId);
 }

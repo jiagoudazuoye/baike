@@ -13,7 +13,5 @@ public interface EntryMapper {
 
     int updateByPrimaryKeySelective(Entry record);
 
-    int updateByPrimaryKeyWithBLOBs(Entry record);
-
     int updateByPrimaryKey(Entry record);
 }

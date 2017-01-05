@@ -13,6 +13,8 @@ public class Template {
 
     private Date updateTime;
 
+    private Integer subCategoryId;
+
     private String content;
 
     public Integer getTemplateId() {
@@ -53,6 +55,14 @@ public class Template {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public void setSubCategoryId(Integer subCategoryId) {
+        this.subCategoryId = subCategoryId;
     }
 
     public String getContent() {

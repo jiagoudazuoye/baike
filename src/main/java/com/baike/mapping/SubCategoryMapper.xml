@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baike.dao.SubCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.baike.model.SubCategory" >
+    <id column="sub_category_id" property="subCategoryId" jdbcType="INTEGER" />
+    <result column="sub_category_name" property="subCategoryName" jdbcType="VARCHAR" />
+    <result column="categogry_id" property="categogryId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sub_category_id, sub_category_name, categogry_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sub_category
+    where sub_category_id = #{subCategoryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sub_category
+    where sub_category_id = #{subCategoryId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.baike.model.SubCategory" >
+    insert into sub_category (sub_category_id, sub_category_name, categogry_id
+      )
+    values (#{subCategoryId,jdbcType=INTEGER}, #{subCategoryName,jdbcType=VARCHAR}, #{categogryId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.baike.model.SubCategory" >
+    insert into sub_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="subCategoryId != null" >
+        sub_category_id,
+      </if>
+      <if test="subCategoryName != null" >
+        sub_category_name,
+      </if>
+      <if test="categogryId != null" >
+        categogry_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="subCategoryId != null" >
+        #{subCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="subCategoryName != null" >
+        #{subCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categogryId != null" >
+        #{categogryId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.baike.model.SubCategory" >
+    update sub_category
+    <set >
+      <if test="subCategoryName != null" >
+        sub_category_name = #{subCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categogryId != null" >
+        categogry_id = #{categogryId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where sub_category_id = #{subCategoryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.baike.model.SubCategory" >
+    update sub_category
+    set sub_category_name = #{subCategoryName,jdbcType=VARCHAR},
+      categogry_id = #{categogryId,jdbcType=INTEGER}
+    where sub_category_id = #{subCategoryId,jdbcType=INTEGER}
+  </update>
+</mapper>

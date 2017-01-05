@@ -1,5 +1,8 @@
 package com.baike.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StringUtil {
 
     /**
@@ -39,5 +42,20 @@ public class StringUtil {
         }else{
             return null;
         }
+    }
+
+    /**
+     * 过滤掉集合里的空格
+     * @param list
+     * @return
+     */
+    public static List<String> filterWhite(List<String> list){
+        List<String> resultList=new ArrayList<String>();
+        for(String l:list){
+            if(isNotEmpty(l)){
+                resultList.add(l);
+            }
+        }
+        return resultList;
     }
 }

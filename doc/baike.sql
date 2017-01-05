@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50519
 File Encoding         : 65001
 
-Date: 2017-01-04 15:32:22
+Date: 2017-01-05 15:32:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -39,6 +39,16 @@ CREATE TABLE `bmanager` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for category
+-- ----------------------------
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `category_id` int(11) NOT NULL,
+  `category_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for comment
 -- ----------------------------
 DROP TABLE IF EXISTS `comment`;
@@ -64,6 +74,7 @@ CREATE TABLE `entry` (
   `create_by` int(11) DEFAULT NULL COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `state` int(1) DEFAULT '0' COMMENT '词条状态0：未审核，1：通过，2：审核失败',
+  `sub_category_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`entry_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -80,6 +91,17 @@ CREATE TABLE `modify_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for sub_category
+-- ----------------------------
+DROP TABLE IF EXISTS `sub_category`;
+CREATE TABLE `sub_category` (
+  `sub_category_id` int(11) NOT NULL,
+  `sub_category_name` varchar(40) DEFAULT NULL,
+  `categogry_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`sub_category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for template
 -- ----------------------------
 DROP TABLE IF EXISTS `template`;
@@ -90,6 +112,7 @@ CREATE TABLE `template` (
   `update_by` int(11) DEFAULT NULL COMMENT '更新者',
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
+  `sub_category_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`template_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
