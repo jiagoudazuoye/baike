@@ -6,6 +6,7 @@ import com.baike.service.EntryService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/1/4/004.
@@ -27,5 +28,17 @@ public class EntryServiceImpl implements EntryService{
 
     public int updateEntry(Entry entry) {
         return entryMapper.updateByPrimaryKeySelective(entry);
+    }
+
+    public List selectBySubId(int id) {
+        return entryMapper.selectBySubId(id);
+    }
+
+    public List searchGoodByKey(String k) {
+        return entryMapper.selectByName(k);
+    }
+
+    public List getEntryByUserId(int userId) {
+        return entryMapper.selectByUserId(userId);
     }
 }

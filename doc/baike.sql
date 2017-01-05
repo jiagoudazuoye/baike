@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50519
 File Encoding         : 65001
 
-Date: 2017-01-05 15:32:07
+Date: 2017-01-05 22:51:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,19 +23,8 @@ CREATE TABLE `admin` (
   `admin_id` int(11) NOT NULL,
   `admin_name` varchar(20) DEFAULT NULL,
   `password` varchar(40) DEFAULT NULL,
+  `state` int(11) DEFAULT '1' COMMENT '1正常  0：锁定',
   PRIMARY KEY (`admin_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for bmanager
--- ----------------------------
-DROP TABLE IF EXISTS `bmanager`;
-CREATE TABLE `bmanager` (
-  `bmanager_id` int(11) NOT NULL AUTO_INCREMENT,
-  `bmanager_name` varchar(20) DEFAULT NULL,
-  `password` varchar(50) DEFAULT NULL,
-  `state` int(1) DEFAULT '1',
-  PRIMARY KEY (`bmanager_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -115,6 +104,29 @@ CREATE TABLE `template` (
   `sub_category_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`template_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for t_permission
+-- ----------------------------
+DROP TABLE IF EXISTS `t_permission`;
+CREATE TABLE `t_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `permissionName` varchar(50) DEFAULT NULL,
+  `roleId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `roleId` (`roleId`) USING BTREE,
+  CONSTRAINT `t_permission_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `t_role` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for t_role
+-- ----------------------------
+DROP TABLE IF EXISTS `t_role`;
+CREATE TABLE `t_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `roleName` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user

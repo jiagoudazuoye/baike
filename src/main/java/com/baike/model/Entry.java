@@ -92,4 +92,19 @@ public class Entry {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Entry{" +
+                "entryId=" + entryId +
+                ", templateId=" + templateId +
+                ", entryName='" + entryName + '\'' +
+                ", keyword='" + keyword + '\'' +
+                ", createBy=" + createBy +
+                ", createTime=" + createTime +
+                ", state=" + state +
+                ", subCategoryId=" + subCategoryId +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

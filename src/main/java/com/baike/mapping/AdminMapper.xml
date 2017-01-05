@@ -68,4 +68,44 @@
       password = #{password,jdbcType=VARCHAR}
     where admin_id = #{adminId,jdbcType=INTEGER}
   </update>
+
+
+  <!--登陆-->
+  <select id="login" resultType="com.baike.model.Admin">
+    select
+    <include refid="Base_Column_List" />
+    from admin
+    where admin_name = #{name} AND password = #{password}
+  </select>
+
+  <select id="getRoles" parameterType="String" resultType="String">
+    select r.roleName from admin u,t_role r where u.roleId=r.id and u.admin_name=#{name}
+  </select>
+
+  <select id="getPermissions" parameterType="String" resultType="String">
+    select p.permissionName from admin u,t_role r,t_permission p where u.roleId=r.id and p.roleId=r.id and u.admin_name=#{name}
+  </select>
+
+  <select id="find" parameterType="Map" resultMap="BaseResultMap">
+    select * from admin
+    <where>
+      <if test="adminName !=null and adminName!='' ">
+        and admin_name like #{adminName} and
+      </if>
+    </where>
+    <if test="start!=null and size!=null">
+      limit #{start},#{size}
+    </if>
+  </select>
+  <select id="getTotal" parameterType="Map" resultType="Long">
+    select count(*) from admin
+    <where>
+      <if test="adminName !=null and adminName!='' ">
+        and admin_name like #{adminName} and
+      </if>
+    </where>
+  </select>
+
+
+
 </mapper>

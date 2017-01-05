@@ -68,4 +68,20 @@
       categogry_id = #{categogryId,jdbcType=INTEGER}
     where sub_category_id = #{subCategoryId,jdbcType=INTEGER}
   </update>
+
+
+  <!--补充-->
+  <select id="selectByCategoryId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from sub_category
+    where category_id = #{cId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from sub_category
+    where sub_category_name like #{name}
+  </select>
 </mapper>

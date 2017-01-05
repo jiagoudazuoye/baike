@@ -136,4 +136,36 @@
       sex = #{sex,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
+
+  <select id="findByName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where user_name = #{userName,jdbcType=VARCHAR}
+  </select>
+
+
+
+  <!-- 用户查询 -->
+  <select id="find" parameterType="Map" resultMap="BaseResultMap">
+    select * from user
+    <where>
+      <if test="userName!=null and userName!='' ">
+        and user_name like #{userName}
+      </if>
+    </where>
+    <if test="start!=null and size!=null">
+      limit #{start},#{size}
+    </if>
+  </select>
+  <select id="getTotal" parameterType="Map" resultType="Long">
+    select count(*) from user
+    <where>
+      <if test="userName!=null and userName!='' ">
+        and user_name like #{userName}
+      </if>
+    </where>
+  </select>
+
+
 </mapper>

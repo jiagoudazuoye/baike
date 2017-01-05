@@ -156,4 +156,26 @@
       sub_category_id = #{subCategoryId,jdbcType=INTEGER}
     where entry_id = #{entryId,jdbcType=INTEGER}
   </update>
+
+  <select id="selectBySubId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from entry
+    where sub_category_id =  = #{subId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByName" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from entry
+    where entry_name =  = #{name,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from entry
+    where create_by =  = #{userId,jdbcType=INTEGER}
+  </select>
+
 </mapper>
