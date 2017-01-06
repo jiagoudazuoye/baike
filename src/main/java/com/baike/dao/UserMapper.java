@@ -31,5 +31,6 @@ public interface UserMapper {
      */
     public Long getTotal(Map<String, Object> map);
 
-
+    //用户修改个人信息
+    int userUpdateInfo(User record);
 }

@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
 
     public User findById(int userId) {
-        return null;
+        return userMapper.selectByPrimaryKey(userId);
     }
 
     public List<User> selectAll() {
@@ -32,10 +32,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public int update(User user) {
-        return 0;
-    }
-
-    public int userUpdate(Integer userId, String phone, String sex, String birthday) {
         return 0;
     }
 
@@ -58,4 +54,14 @@ public class UserServiceImpl implements UserService {
     public User findByName(String userName) {
         return null;
     }
+
+    //用户修改信息
+    public int userUpdate(Integer userId, Integer age, String sex, String password) {
+        User user=userMapper.selectByPrimaryKey(userId);
+        user.setAge(age);
+        user.setSex(sex);
+        user.setPassword(password);
+        return userMapper.userUpdateInfo(user);
+    }
+
 }

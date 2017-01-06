@@ -41,7 +41,23 @@ public class UserController extends SpringMvcActionContext{
         return MyResult.getResult(1,"",userList);
     }
 
+    //用户查看个人信息
+    @RequestMapping(value = "userQueryInfo",method = RequestMethod.GET)
+    @ResponseBody
+    public Object userQueryInfo(){
+        User user = (User)getSession().getAttribute("user");
+        Integer userId = user.getUserId();
+        User userInfo=userService.findById(userId);
+        return MyResult.getResult(1,"",userInfo);
+    }
 
+    //用户修改个人信息
+    @RequestMapping(value = "updateUserInfo",method = RequestMethod.POST)
+    public String updateUserInfo(User userInfoUpdate){
+        User user=(User)getSession().getAttribute("user");
+        userService.userUpdate(user.getUserId(),userInfoUpdate.getAge(),userInfoUpdate.getSex(),userInfoUpdate.getPassword());
+        return "redirect:/user/userInfo";
+    }
 
 
 }

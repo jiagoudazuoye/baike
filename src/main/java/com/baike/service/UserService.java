@@ -18,8 +18,6 @@ public interface UserService {
 
     int update(User user);
 
-    int userUpdate(Integer userId, String phone, String sex, String birthday);
-
     int updateImage(Integer userId, String userImage);
 
     /**
@@ -57,5 +55,8 @@ public interface UserService {
     public int delete(Integer userId);
 
     User findByName(String userName);
+
+    //用户修改信息
+    int userUpdate(Integer userId, Integer age, String sex, String password);
 
 }
