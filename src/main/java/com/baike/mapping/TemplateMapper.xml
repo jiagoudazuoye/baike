@@ -26,6 +26,11 @@
     from template
     where template_id = #{templateId,jdbcType=INTEGER}
   </select>
+  <select id="selectAll" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from template
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from template
     where template_id = #{templateId,jdbcType=INTEGER}

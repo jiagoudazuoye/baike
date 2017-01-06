@@ -14,6 +14,8 @@ public interface EntryMapper {
 
     Entry selectByPrimaryKey(Integer entryId);
 
+    List<Entry> selectAll();
+
     int updateByPrimaryKeySelective(Entry record);
 
     int updateByPrimaryKey(Entry record);

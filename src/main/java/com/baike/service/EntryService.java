@@ -11,6 +11,8 @@ public interface EntryService {
 
     public Entry findEntryById(int id);
 
+     List<Entry> selectAll();
+
     public int addEntry(Entry entry);
 
     public int updateEntry(Entry entry);

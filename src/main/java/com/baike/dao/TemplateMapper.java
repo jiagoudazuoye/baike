@@ -2,6 +2,8 @@ package com.baike.dao;
 
 import com.baike.model.Template;
 
+import java.util.List;
+
 public interface TemplateMapper {
     int deleteByPrimaryKey(Integer templateId);
 
@@ -10,6 +12,8 @@ public interface TemplateMapper {
     int insertSelective(Template record);
 
     Template selectByPrimaryKey(Integer templateId);
+
+    List<Template> selectAll();
 
     int updateByPrimaryKeySelective(Template record);
 

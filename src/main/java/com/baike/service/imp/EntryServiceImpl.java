@@ -22,6 +22,10 @@ public class EntryServiceImpl implements EntryService{
         return entryMapper.selectByPrimaryKey(id);
     }
 
+    public List<Entry> selectAll(){
+        return entryMapper.selectAll();
+    }
+
     public int addEntry(Entry entry) {
         return entryMapper.insertSelective(entry);
     }
