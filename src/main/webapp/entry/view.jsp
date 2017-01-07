@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>main_baike</title>
+	<title>${entry.entryName}_baike</title>
 
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap-theme.min.css">
@@ -19,26 +19,25 @@
 	<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor/ueditor.all.min.js"> </script>
 
 	<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor/lang/zh-cn/zh-cn.js"></script>
-
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/my.css">
 	<script type="text/javascript">
 		var ue = UE.getEditor('editor');
 
 		//        提交
 		function submitData(){
-			var templateName=$("#templateName").val();
-			var keyword = $("#keyword").val();
-			var content=UE.getEditor('editor').getContent();
-			if(templateName==null || templateName==''){
-				alert("请输入词条名！");
-			}else if(content==null || content==''){
+//			var templateName=$("#templateName").val();
+			var entryId = ${entry.entryId};
+			var content = $('#content').val();
+			if(content==null || content==''){
 				alert("请输入内容！");
 			}else{
-				$.post("${pageContext.request.contextPath}/entry/createEntry",{'templateName':templateName,'content':content,'keyword':keyword},function(result){
+				$.post("${pageContext.request.contextPath}/comment/save",{'entryId':entryId,'content':content},function(result){
 					if(result.success){
-						alert("词条提交成功！");
-						resetValue();
+						alert("评论成功！");
+						location.reload();
 					}else{
-						alert("词条提交失败！");
+						alert("评论失败！");
+						alert(result.errorInfo);
 					}
 				},"json");
 			}
@@ -66,51 +65,84 @@
 	</script>
 </head>
 <body>
+
 <div class="container">
 	<jsp:include page="/common/head.jsp"/>
-
 	<jsp:include page="/common/menu.jsp"/>
-
 	<div class="row">
 		<div class="col-md-9">
-			<div class="input-group">
-				<span class="input-group-addon" style="font-weight: bold">词条名</span>
-				<input type="text" id="templateName" class="form-control" placeholder="请输入词条的名称">
+			<font style="font-size: 30px;align:center"><strong>${entry.entryName}</strong></font>
+			<div style="margin-top:20px;
+	padding-bottom: 30px;">
+				${entry.content}
 			</div>
-			<br>
-			<div class="input-group">
-				<span class="input-group-addon">关键字</span>
-				<input  id="keyword" type="text" class="form-control" placeholder="请输入关键字，如有多个请用空格分开">
+			<div style="margin-top:20px;
+	padding-bottom: 30px;
+	padding-left: 30px;color: black;
+	font-style: italic;">
+				<font><strong>关键字：</strong></font>
+
+			<c:choose>
+				<c:when test="${keyWords==null}">
+					&nbsp;&nbsp;无
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="keyWord" items="${keyWords }">
+						&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/entry/searchByKey?key=${keyWord}" target="_blank">${keyWord }</a>&nbsp;&nbsp;
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
 			</div>
-			<br>
-			<div class="row">
-				<table>
-					<tr>
-						<td class="col-md-1" valign="top">&nbsp;内&nbsp;容：</td>
-						<td class="col-md-11">
-							<script id="editor" type="text/plain" style="width:100%;height:500px;"></script>
-						</td>
-					</tr>
-				</table>
+
+			<div class="data_list">
+				<div class="data_list_title">
+					<img src="${pageContext.request.contextPath}/static/images/comment_icon.png"/>
+					评论信息
+				</div>
+				<div class="commentDatas">
+					<c:choose>
+						<c:when test="${commentList.size()==0}">
+							暂无评论
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="comment" items="${commentList }" varStatus="status">
+								<c:choose>
+									<c:when test="${status.index<10 }">
+										<div class="comment">
+											<span><font>${status.index+1 }楼&nbsp;&nbsp;&nbsp;&nbsp;${comment.userId }：</font>${comment.content }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<fmt:formatDate value="${comment.commentTime }" type="date" pattern="yyyy-MM-dd HH:mm"/>&nbsp;]</span>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="otherComment">
+											<div class="comment">
+												<span><font>${status.index+1 }楼&nbsp;&nbsp;&nbsp;&nbsp;${comment.userId }：</font>${comment.content }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<fmt:formatDate value="${comment.commentTime }" type="date" pattern="yyyy-MM-dd HH:mm"/>&nbsp;]</span>
+											</div>
+										</div>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</div>
 			</div>
-			<button class="btn btn-primary" style="float: right" type="button" onclick="submitData()">提交</button>
+
+			<div class="data_list" >
+				<div class="data_list_title">
+					<img src="${pageContext.request.contextPath}/static/images/publish_comment_icon.png"/>
+					发表评论
+				</div>
+				<div class="publish_comment">
+					<div>
+						<textarea style="width: 100%" rows="3" id="content" name="content" placeholder="来说两句吧..."></textarea>
+					</div>
+					<div class="publishButton">
+						<button class="btn btn-primary" type="button" onclick="submitData()">发表评论</button>
+					</div>
+					</form>
+				</div>
+			</div>
 		</div>
 		<div class="col-md-3" style="font-size: 15px;font-weight: bold;border-bottom: 1px solid #E5E5E5;padding-bottom: 10px;padding-top: 5px;">
-			<div>
-				<div style="font-size: 20px;font-weight: bold;border-bottom: 1px solid #E5E5E5;padding-bottom: 10px;padding-top: 5px;">
-					<%--<img src="${pageContext.request.contextPath}/static/images/byType_icon.png"/>--%>
-					模版
-				</div>
-				<div class="datas" >
-					<ul>
-						<c:forEach var="t" items="${templateList }">
-							<li style="margin: 2px;">${t.templateName }
-								<button class="btn btn-primary btn-xs" id="${t.templateId}" type="button"  onclick="UseTemplate(this)">应用</button>
-							</li>
-						</c:forEach>
-					</ul>
-				</div>
-			</div>
 		</div>
 	</div>
 

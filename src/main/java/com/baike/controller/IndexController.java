@@ -22,7 +22,7 @@ public class IndexController extends SpringMvcActionContext{
     @Resource
     private CategoryService categoryService;
 
-    @RequestMapping(value = {"","/index"},method= RequestMethod.GET)
+    @RequestMapping(value = {"/","/index"},method= RequestMethod.GET)
     public ModelAndView index(){
         System.out.println("............................................................");
         ModelAndView modelAndView=new ModelAndView("main");

@@ -39,7 +39,7 @@ public class EntryController extends SpringMvcActionContext {
         ModelAndView mv = new ModelAndView();
         List<Template> templateList = templateService.selectAll();
         mv.addObject("templateList",templateList);
-        mv.setViewName("/user/createEntry");
+        mv.setViewName("/entry/createEntry");
         return mv;
     }
 
@@ -110,9 +110,12 @@ public class EntryController extends SpringMvcActionContext {
         Map<String,Object> map=new HashMap<String,Object>();
         map.put("entryId", entry.getEntryId());
         mv.addObject("commentList",commentService.getCommentList(entryId));//评论列表
-        mv.addObject("mainPage", "entry/view.jsp");//${mainPage}
+        System.out.println("-----------------------------------------------------------------------------------");
+        System.out.println(commentService.getCommentList(entryId).size());
+        System.out.println(commentService.getCommentList(entryId).get(0).toString());
+        System.out.println("-----------------------------------------------------------------------------------");
         mv.addObject("pageTitle",entry.getEntryName()+"_互动百科系统");//标题，用于html的title标签
-        mv.setViewName("main");//  main.jsp
+        mv.setViewName("/entry/view");
         return mv;
     }
 

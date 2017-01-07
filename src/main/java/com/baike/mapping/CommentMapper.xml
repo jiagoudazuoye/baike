@@ -106,16 +106,17 @@
   </update>
 
 
-  <select id="getCommentList" parameterType="Map" resultMap="BaseResultMap">
-    select * from comment
+  <select id="getCommentList" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comment
     <where>
       <if test="entryId!=null">
         and entry_id=#{entryId}
       </if>
     </where>
-    order by comment_time
-    <if test="start!=null and size!=null">
-      limit #{start},#{size}
-    </if>
+    order by comment_time desc
   </select>
 </mapper>
