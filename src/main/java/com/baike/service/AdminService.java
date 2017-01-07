@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by dell on 2016/8/21.
+ * Created by xiechur on 2016/8/21.
  */
 public interface AdminService {
     //登录
