@@ -168,14 +168,14 @@
     SELECT
     <include refid="Base_Column_List" />
     from entry
-    where sub_category_id =  = #{subId,jdbcType=INTEGER}
+    where sub_category_id = #{subId,jdbcType=INTEGER}
   </select>
 
-  <select id="selectByName" resultMap="BaseResultMap">
+  <select id="searchByName" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List" />
     from entry
-    where entry_name =  = #{name,jdbcType=VARCHAR}
+    where entry_name LIKE #{name,jdbcType=VARCHAR}
   </select>
 
   <select id="selectByUserId" resultMap="BaseResultMap">
@@ -184,5 +184,14 @@
     from entry
     where create_by =  = #{userId,jdbcType=INTEGER}
   </select>
+
+
+  <select id="selectByName" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from entry
+    where entry_name = #{name,jdbcType=VARCHAR}
+  </select>
+
 
 </mapper>

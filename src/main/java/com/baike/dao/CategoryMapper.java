@@ -3,6 +3,8 @@ package com.baike.dao;
 import com.baike.model.Category;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface CategoryMapper {
     int deleteByPrimaryKey(Integer categoryId);
 
@@ -17,4 +19,6 @@ public interface CategoryMapper {
     int updateByPrimaryKey(Category record);
 
     Category selectByName(@Param(("name")) String name);
+
+    List<Category> getCategoryList();
 }

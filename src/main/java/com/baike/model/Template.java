@@ -5,6 +5,8 @@ import java.util.Date;
 public class Template {
     private Integer templateId;
 
+    private String templateName;
+
     private Integer createBy;
 
     private Integer updateBy;
@@ -23,6 +25,14 @@ public class Template {
 
     public void setTemplateId(Integer templateId) {
         this.templateId = templateId;
+    }
+
+    public String getTemplateName() {
+        return templateName;
+    }
+
+    public void setTemplateName(String templateName) {
+        this.templateName = templateName == null ? null : templateName.trim();
     }
 
     public Integer getCreateBy() {

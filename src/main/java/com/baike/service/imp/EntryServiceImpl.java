@@ -39,10 +39,14 @@ public class EntryServiceImpl implements EntryService{
     }
 
     public List searchGoodByKey(String k) {
-        return entryMapper.selectByName(k);
+        return entryMapper.searchByName(k);
     }
 
     public List getEntryByUserId(int userId) {
         return entryMapper.selectByUserId(userId);
+    }
+
+    public Entry getEntryByName(String entryName) {
+        return entryMapper.selectByName(entryName);
     }
 }

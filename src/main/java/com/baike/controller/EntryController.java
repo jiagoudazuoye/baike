@@ -5,9 +5,7 @@ import com.baike.model.*;
 import com.baike.service.*;
 import com.baike.util.StringUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -27,14 +25,30 @@ public class EntryController extends SpringMvcActionContext {
     private CategoryService categoryService;
     @Resource
     private SubCategoryService subCategoryService;
+    @Resource
+    private ModifyInfoService modifyInfoService;
+    @Resource
+    private TemplateService templateService;
 
+    /***
+     *新建 词条
+     * @return
+     */
+    @RequestMapping(value = "/entry/createEntry",method = RequestMethod.GET)
+    public ModelAndView toCreateEntry(){
+        ModelAndView mv = new ModelAndView();
+        List<Template> templateList = templateService.selectAll();
+        mv.addObject("templateList",templateList);
+        mv.setViewName("/user/createEntry");
+        return mv;
+    }
 
     /***
      *新建 词条
      * @param entry
      * @return
      */
-    @RequestMapping("/entry/createEntry")
+    @RequestMapping(value = "/entry/createEntry",method = RequestMethod.POST)
     @ResponseBody
     public Object createEntry(Entry entry){
         entry.setCreateTime(new Date());
@@ -60,6 +74,12 @@ public class EntryController extends SpringMvcActionContext {
     public Object editEntry(Entry entry){
         Map<String,Object> map = new HashMap<String, Object>();
         int result = entryService.updateEntry(entry);
+        ModifyInfo modifyInfo = new ModifyInfo();
+        modifyInfo.setEntryId(entry.getEntryId());
+        modifyInfo.setModifyTime(new Date());
+        User user = (User)getSession().getAttribute("user");
+        modifyInfo.setUserId(user.getUserId());
+        modifyInfoService.addModifyInfo(modifyInfo);
         if (result > 0){
             map.put("success",true);
         }else {
@@ -102,7 +122,7 @@ public class EntryController extends SpringMvcActionContext {
      * @param key
      * @return
      */
-    @RequestMapping(value="searchGoodByKey")
+    @RequestMapping(value="/entry/searchEntryByKey")
     public ModelAndView search(String key){
         ModelAndView modelAndView = new ModelAndView();
         Category category = categoryService.selectByName(key);
@@ -157,7 +177,7 @@ public class EntryController extends SpringMvcActionContext {
      * @param userId
      * @return
      */
-    @RequestMapping("getMyEntry")
+    @RequestMapping("entry/getMyEntry")
     public ModelAndView getMyEntry(int userId){
         ModelAndView modelAndView = new ModelAndView();
         List<Entry> entryList = entryService.getEntryByUserId(userId);
@@ -168,6 +188,46 @@ public class EntryController extends SpringMvcActionContext {
         }
         modelAndView.setViewName("");
         return  modelAndView;
+    }
+
+    /***
+     * 进入词条
+     * @param
+     * @return
+     */
+    @RequestMapping("entry/watchEntry")
+    public ModelAndView watchEntry(String entryName){
+        ModelAndView modelAndView = new ModelAndView();
+        Entry entry = entryService.getEntryByName(entryName);
+        modelAndView.addObject("entry",entry);
+        if (entry != null){
+            modelAndView.setViewName("");
+            return  modelAndView;
+        }
+        modelAndView.addObject("error","找不到此词条");
+        modelAndView.setViewName("error");
+        return  modelAndView;
+    }
+
+
+//    @RequestMapping("getCategory")
+//    public ModelAndView getCategory(){
+//        ModelAndView modelAndView = new ModelAndView();
+//        List<Category> categoryList = categoryService.getCategoryList();
+//        modelAndView.addObject("categoryList",categoryList);
+//        if (categoryList.size() > 0){
+//            modelAndView.setViewName("");
+//            return  modelAndView;
+//        }
+//        modelAndView.setViewName("");
+//        return  modelAndView;
+//    }
+
+    @RequestMapping("template/findById")
+    @ResponseBody
+    public Object findTemplateById(@RequestParam("templateId")int templateId){
+        Template template = templateService.findById(templateId);
+        return template;
     }
 
 }

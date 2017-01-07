@@ -33,17 +33,17 @@ public class ManageEntryController {
     @RequestMapping(value = "entryList")
     @ResponseBody
     public Object selectEntries(){
-
         List<Entry> entriesList = entryService.selectAll();
         return MyResult.getResult(1,"",entriesList);
     }
+
+
     @RequestMapping(value="check/{entryId}")
     @ResponseBody
     public Object update(@PathVariable("entryId") Integer entryId){
         Entry entry=entryService.findEntryById(entryId);
         return MyResult.getResult(1,"",entry);
     }
-
 
     @RequestMapping(value = "auditsucess")
     @ResponseBody
@@ -53,6 +53,7 @@ public class ManageEntryController {
         entryService.updateEntry(entry);
         return MyResult.getResult(1,"审核通过",null);
     }
+
     @RequestMapping(value = "auditfail")
     @ResponseBody
     public Object auditFail(@RequestParam int entryId){

@@ -6,6 +6,7 @@ import com.baike.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/11/23/023.
@@ -20,5 +21,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     public Category selectByName(String key) {
         return categoryMapper.selectByName(key);
+    }
+
+    public List<Category> getCategoryList() {
+        return categoryMapper.getCategoryList();
     }
 }

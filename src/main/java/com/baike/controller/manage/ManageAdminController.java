@@ -32,7 +32,6 @@ public class ManageAdminController extends SpringMvcActionContext {
     private AdminService adminService;
     /**
      * 管理员登陆
-     *
      * @param admin
      * @return
      */

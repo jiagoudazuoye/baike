@@ -22,7 +22,9 @@ public interface EntryMapper {
 
     List<Entry> selectBySubId(@Param("subId")int subId);
 
-    List<Entry> selectByName(@Param("name")String name);
+    List<Entry> searchByName(@Param("name")String name);
 
     List<Entry> selectByUserId(@Param("userId")int userId);
+
+    Entry selectByName(@Param("name")String name);
 }

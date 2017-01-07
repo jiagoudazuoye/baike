@@ -3,6 +3,7 @@
 <mapper namespace="com.baike.dao.TemplateMapper" >
   <resultMap id="BaseResultMap" type="com.baike.model.Template" >
     <id column="template_id" property="templateId" jdbcType="INTEGER" />
+    <result column="template_name" property="templateName" jdbcType="VARCHAR" />
     <result column="create_by" property="createBy" jdbcType="INTEGER" />
     <result column="update_by" property="updateBy" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -13,41 +14,39 @@
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    template_id, create_by, update_by, create_time, update_time, sub_category_id
+    template_id, template_name, create_by, update_by, create_time, update_time, sub_category_id
   </sql>
   <sql id="Blob_Column_List" >
     content
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from template
     where template_id = #{templateId,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap"  >
-    select
-    <include refid="Base_Column_List" />
-    from template
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from template
     where template_id = #{templateId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.baike.model.Template" >
-    insert into template (template_id, create_by, update_by, 
-      create_time, update_time, sub_category_id, 
-      content)
-    values (#{templateId,jdbcType=INTEGER}, #{createBy,jdbcType=INTEGER}, #{updateBy,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{subCategoryId,jdbcType=INTEGER}, 
-      #{content,jdbcType=LONGVARCHAR})
+    insert into template (template_id, template_name, create_by,
+    update_by, create_time, update_time,
+    sub_category_id, content)
+    values (#{templateId,jdbcType=INTEGER}, #{templateName,jdbcType=VARCHAR}, #{createBy,jdbcType=INTEGER},
+    #{updateBy,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+    #{subCategoryId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.baike.model.Template" >
     insert into template
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="templateId != null" >
         template_id,
+      </if>
+      <if test="templateName != null" >
+        template_name,
       </if>
       <if test="createBy != null" >
         create_by,
@@ -72,6 +71,9 @@
       <if test="templateId != null" >
         #{templateId,jdbcType=INTEGER},
       </if>
+      <if test="templateName != null" >
+        #{templateName,jdbcType=VARCHAR},
+      </if>
       <if test="createBy != null" >
         #{createBy,jdbcType=INTEGER},
       </if>
@@ -95,6 +97,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.baike.model.Template" >
     update template
     <set >
+      <if test="templateName != null" >
+        template_name = #{templateName,jdbcType=VARCHAR},
+      </if>
       <if test="createBy != null" >
         create_by = #{createBy,jdbcType=INTEGER},
       </if>
@@ -118,21 +123,31 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.baike.model.Template" >
     update template
-    set create_by = #{createBy,jdbcType=INTEGER},
-      update_by = #{updateBy,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      sub_category_id = #{subCategoryId,jdbcType=INTEGER},
-      content = #{content,jdbcType=LONGVARCHAR}
+    set template_name = #{templateName,jdbcType=VARCHAR},
+    create_by = #{createBy,jdbcType=INTEGER},
+    update_by = #{updateBy,jdbcType=INTEGER},
+    create_time = #{createTime,jdbcType=TIMESTAMP},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    sub_category_id = #{subCategoryId,jdbcType=INTEGER},
+    content = #{content,jdbcType=LONGVARCHAR}
     where template_id = #{templateId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.baike.model.Template" >
     update template
-    set create_by = #{createBy,jdbcType=INTEGER},
+    set template_name = #{templateName,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=INTEGER},
       update_by = #{updateBy,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       sub_category_id = #{subCategoryId,jdbcType=INTEGER}
     where template_id = #{templateId,jdbcType=INTEGER}
   </update>
+
+  <select id="selectAll" resultMap="ResultMapWithBLOBs" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from template
+  </select>
 </mapper>

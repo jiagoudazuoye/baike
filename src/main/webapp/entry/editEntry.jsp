@@ -20,17 +20,15 @@
 	}
 </script>
 <form>
-
-<table>
+	<table>
 		<tr>
-			<td valign="top">博客内容：</td>
+			<td valign="top">内容：</td>
 				<button value="提交" onclick="getContent()">afssadfasdfasddsf</button>
 			<td>
 				<script id="editor" type="text/plain" style="width:100%;height:500px;"></script>
 			</td>
 		</tr>
 	</table>
-
 </form>
 
 

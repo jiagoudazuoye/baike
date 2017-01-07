@@ -22,4 +22,6 @@ public interface EntryService {
     public List searchGoodByKey(String k);
 
     public List getEntryByUserId(int userId);
+
+    public  Entry getEntryByName(String entryName);
 }

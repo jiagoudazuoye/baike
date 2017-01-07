@@ -62,4 +62,11 @@
     from category
     where category_name like #{name}
   </select>
+
+  <select id="getCategoryList" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from category
+  </select>
+
 </mapper>
