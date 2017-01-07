@@ -1,10 +1,7 @@
 package com.baike.controller;
 
 import com.baike.common.SpringMvcActionContext;
-import com.baike.model.Category;
-import com.baike.model.Comment;
-import com.baike.model.Entry;
-import com.baike.model.SubCategory;
+import com.baike.model.*;
 import com.baike.service.*;
 import com.baike.util.StringUtil;
 import org.springframework.stereotype.Controller;
@@ -30,6 +27,46 @@ public class EntryController extends SpringMvcActionContext {
     private CategoryService categoryService;
     @Resource
     private SubCategoryService subCategoryService;
+
+
+    /***
+     *新建 词条
+     * @param entry
+     * @return
+     */
+    @RequestMapping("/entry/createEntry")
+    @ResponseBody
+    public Object createEntry(Entry entry){
+        entry.setCreateTime(new Date());
+        User user = (User)getSession().getAttribute("user");
+        entry.setCreateBy(user.getUserId());
+        Map<String,Object> map = new HashMap<String, Object>();
+        int result = entryService.addEntry(entry);
+        if (result > 0){
+            map.put("success",true);
+        }else {
+            map.put("success",false);
+        }
+        return map;
+    }
+
+    /***
+     * 修改词条
+     * @param entry
+     * @return
+     */
+    @RequestMapping("/entry/edit")
+    @ResponseBody
+    public Object editEntry(Entry entry){
+        Map<String,Object> map = new HashMap<String, Object>();
+        int result = entryService.updateEntry(entry);
+        if (result > 0){
+            map.put("success",true);
+        }else {
+            map.put("success",false);
+        }
+        return map;
+    }
 
     /***
      * 获取 词条详情
@@ -59,33 +96,12 @@ public class EntryController extends SpringMvcActionContext {
         return mv;
     }
 
+
     /***
-     * 修改词条
-     * @param entry
+     * 模糊搜索
+     * @param key
      * @return
      */
-    @RequestMapping("/entry/edit")
-    @ResponseBody
-    public Object editEntry(Entry entry){
-        Map<String,Object> map = new HashMap<String, Object>();
-        int result = entryService.updateEntry(entry);
-        if (result > 0){
-            map.put("success",true);
-        }else {
-            map.put("success",false);
-        }
-        return map;
-    }
-
-//    @RequestMapping("")
-
-//    @RequestMapping("search")
-//    @ResponseBody
-//    public List<Entry> entries(String key){
-//
-//    }
-
-
     @RequestMapping(value="searchGoodByKey")
     public ModelAndView search(String key){
         ModelAndView modelAndView = new ModelAndView();
@@ -136,7 +152,11 @@ public class EntryController extends SpringMvcActionContext {
         }
     }
 
-
+    /***
+     * 获取我的词条
+     * @param userId
+     * @return
+     */
     @RequestMapping("getMyEntry")
     public ModelAndView getMyEntry(int userId){
         ModelAndView modelAndView = new ModelAndView();
@@ -148,8 +168,6 @@ public class EntryController extends SpringMvcActionContext {
         }
         modelAndView.setViewName("");
         return  modelAndView;
-
-
     }
 
 }

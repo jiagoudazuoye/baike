@@ -2,6 +2,7 @@ package com.baike.controller;
 
 import com.baike.common.SpringMvcActionContext;
 import com.baike.model.Comment;
+import com.baike.model.User;
 import com.baike.service.CommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.ObjectError;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.security.interfaces.ECKey;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +33,9 @@ public class CommentController extends SpringMvcActionContext {
     @ResponseBody//声明返回json
     public Object save(Comment comment){
         Map<String,Object> map = new HashMap<String, Object>();
+        comment.setCommentTime(new Date());
+        User user = (User) getSession().getAttribute("user");
+        comment.setUserId(user.getUserId());
         int result = commentService.addComment(comment);
         if (result > 0){
             map.put("success",true);
