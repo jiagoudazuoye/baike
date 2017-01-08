@@ -25,15 +25,15 @@
 
 //        提交
         function submitData(){
-            var templateName=$("#templateName").val();
+            var entryName=$("#entryName").val();
             var keyword = $("#keyword").val();
             var content=UE.getEditor('editor').getContent();
-            if(templateName==null || templateName==''){
+            if(entryName==null || entryName==''){
                 alert("请输入词条名！");
             }else if(content==null || content==''){
                 alert("请输入内容！");
             }else{
-                $.post("${pageContext.request.contextPath}/entry/createEntry",{'templateName':templateName,'content':content,'keyword':keyword},function(result){
+                $.post("${pageContext.request.contextPath}/entry/createEntry",{'entryName':entryName,'content':content,'keyword':keyword},function(result){
                     if(result.success){
                         alert("词条提交成功！");
                         resetValue();
@@ -75,7 +75,7 @@
         <div class="col-md-9">
             <div class="input-group">
                 <span class="input-group-addon" style="font-weight: bold">词条名</span>
-                <input type="text" id="templateName" class="form-control" placeholder="请输入词条的名称">
+                <input type="text" id="entryName" class="form-control" placeholder="请输入词条的名称">
             </div>
             <br>
             <div class="input-group">
@@ -93,30 +93,30 @@
                     </tr>
                 </table>
             </div>
-                <button class="btn btn-primary" style="float: right" type="button" onclick="submitData()">提交</button>
-            </div>
-            <div class="col-md-3" style="font-size: 15px;font-weight: bold;border-bottom: 1px solid #E5E5E5;padding-bottom: 10px;padding-top: 5px;">
-                <div>
-                    <div style="font-size: 20px;font-weight: bold;border-bottom: 1px solid #E5E5E5;padding-bottom: 10px;padding-top: 5px;">
-                        <%--<img src="${pageContext.request.contextPath}/static/images/byType_icon.png"/>--%>
-                        模版
-                    </div>
-                    <div class="datas" >
-                        <ul>
-                            <c:forEach var="t" items="${templateList }">
-                                <li style="margin: 2px;">${t.templateName }
-                                    <button class="btn btn-primary btn-xs" id="${t.templateId}" type="button"  onclick="UseTemplate(this)">应用</button>
-                                </li>
-                            </c:forEach>
-                        </ul>
-                    </div>
+            <button class="btn btn-primary" style="float: right" type="button" onclick="submitData()">提交</button>
+        </div>
+
+        <div class="col-md-3" style="font-size: 15px;font-weight: bold;border-bottom: 1px solid #E5E5E5;padding-bottom: 10px;padding-top: 5px;">
+            <div>
+                <div style="font-size: 20px;font-weight: bold;border-bottom: 1px solid #E5E5E5;padding-bottom: 10px;padding-top: 5px;">
+                    <%--<img src="${pageContext.request.contextPath}/static/images/byType_icon.png"/>--%>
+                    模版
+                </div>
+                <div class="datas" >
+                    <ul>
+                        <c:forEach var="t" items="${templateList }">
+                            <li style="margin: 2px;">${t.templateName }
+                                <button class="btn btn-primary btn-xs" id="${t.templateId}" type="button"  onclick="UseTemplate(this)">应用</button>
+                            </li>
+                        </c:forEach>
+                    </ul>
                 </div>
             </div>
+        </div>
         </div>
 
     </div>
 
-    <jsp:include page="/common/foot.jsp"/>
-</div>
+
 </body>
 </html>

@@ -64,12 +64,31 @@ public class EntryController extends SpringMvcActionContext {
         return map;
     }
 
+    @RequestMapping(value = "/entry/edit/{entryId}",method = RequestMethod.GET)
+    public ModelAndView edit(@PathVariable("entryId")Integer entryId){
+        ModelAndView mv = new ModelAndView();
+        Entry entry = entryService.findEntryById(entryId);
+        System.out.println(entry.toString());
+        List<Template> templateList = templateService.selectAll();
+        mv.addObject("templateList",templateList);
+        if (entry != null){
+            mv.addObject("entry",entry);
+            mv.setViewName("/entry/editEntry");
+            return mv;
+        }else {
+            mv.addObject("error","找不到这个词条");
+            mv.setViewName("error");
+            return mv;
+        }
+
+    }
+
     /***
      * 修改词条
      * @param entry
      * @return
      */
-    @RequestMapping("/entry/edit")
+    @RequestMapping(value = "/entry/edit",method = RequestMethod.POST)
     @ResponseBody
     public Object editEntry(Entry entry){
         Map<String,Object> map = new HashMap<String, Object>();
