@@ -52,8 +52,8 @@ public class EntryController extends SpringMvcActionContext {
     @ResponseBody
     public Object createEntry(Entry entry){
         entry.setCreateTime(new Date());
-        User user = (User)getSession().getAttribute("user");
-        entry.setCreateBy(user.getUserId());
+//        User user = (User)getSession().getAttribute("user");
+//        entry.setCreateBy(user.getUserId());
         Map<String,Object> map = new HashMap<String, Object>();
         int result = entryService.addEntry(entry);
         if (result > 0){
@@ -129,11 +129,11 @@ public class EntryController extends SpringMvcActionContext {
         Map<String,Object> map=new HashMap<String,Object>();
         map.put("entryId", entry.getEntryId());
         mv.addObject("commentList",commentService.getCommentList(entryId));//评论列表
-        System.out.println("-----------------------------------------------------------------------------------");
-        System.out.println(commentService.getCommentList(entryId).size());
-        System.out.println(commentService.getCommentList(entryId).get(0).toString());
-        System.out.println("-----------------------------------------------------------------------------------");
-        mv.addObject("pageTitle",entry.getEntryName()+"_互动百科系统");//标题，用于html的title标签
+//        System.out.println("-----------------------------------------------------------------------------------");
+//        System.out.println(commentService.getCommentList(entryId).size());
+//        System.out.println(commentService.getCommentList(entryId).get(0).toString());
+//        System.out.println("-----------------------------------------------------------------------------------");
+//        mv.addObject("pageTitle",entry.getEntryName()+"_互动百科系统");//标题，用于html的title标签
         mv.setViewName("/entry/view");
         return mv;
     }

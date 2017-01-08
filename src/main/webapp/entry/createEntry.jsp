@@ -36,7 +36,7 @@
                 $.post("${pageContext.request.contextPath}/entry/createEntry",{'entryName':entryName,'content':content,'keyword':keyword},function(result){
                     if(result.success){
                         alert("词条提交成功！");
-                        resetValue();
+                        window.location("index");
                     }else{
                         alert("词条提交失败！");
                     }
