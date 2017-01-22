@@ -30,4 +30,5 @@ public class IndexController extends SpringMvcActionContext{
         modelAndView.addObject("categoryList",categoryList);
         return modelAndView;
     }
+
 }
